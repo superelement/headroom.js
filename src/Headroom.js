@@ -107,6 +107,13 @@ Headroom.prototype = {
   },
 
   /**
+   * Updates the value of the 'offset' option, in case you need to change it at runtime
+   */
+  updateOffset : function(val) {
+    this.offset = val;
+  },
+
+  /**
    * Attaches the scroll event
    * @private
    */
