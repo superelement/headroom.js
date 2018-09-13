@@ -486,6 +486,58 @@
 
     });
 
+
+    describe('updateOffset', function() {
+
+      var getScrollerHeight, getViewportHeight, hr;
+
+      beforeEach(function() {
+
+        hr = new Headroom(elem, {
+          offset: 50,
+          classes: {
+            pinned : "is-pinned",
+            unpinned : "is-unpinned"
+          },
+          scroller: document.body
+        });
+
+        hr.onTop = jasmine.createSpy();
+
+        classList.contains.andReturn(false);
+        hr.top();
+
+        getViewportHeight = spyOn(hr, 'getViewportHeight');
+        getScrollerHeight = spyOn(hr, 'getScrollerHeight');
+      });
+
+      
+      it('should not be out of bounds at just below new offset when offset is changed at runtime', function() {
+
+        var documentHeight = 3000;
+        var viewportHeight = 500;
+
+        getScrollerHeight.andReturn(documentHeight);
+        getViewportHeight.andReturn(viewportHeight);
+
+        document.body.pageYOffset = 100;
+        hr.update();
+        
+        expect(hr.getScrollY()).toBe(100);
+        expect(classList.add).toHaveBeenCalledWith(hr.classes.unpinned);
+        expect(classList.add).toHaveBeenCalledWith(hr.classes.notTop);
+
+        hr.updateOffset(200);
+
+        hr.update();
+        
+        // TODO: may need to clear classes here
+        expect(classList.add).toHaveBeenCalledWith(hr.classes.pinned);
+        // expect(classList.add).toHaveBeenCalledWith(headroom.classes.top);
+      });
+
+    });
+
   });
 
 }(this));

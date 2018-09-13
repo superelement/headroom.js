@@ -84,8 +84,8 @@ module.exports = function(grunt) {
       },
       continuous : {
         options : {
-          singleRun : true,
-          browsers : ['PhantomJS']
+          singleRun : false,
+          browsers : ['Chrome']
         }
       }
     },
